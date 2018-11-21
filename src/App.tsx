@@ -3,9 +3,11 @@ import { Navigation } from "react-native-navigation";
 import TodoScreen from "./screens/TodoScreen";
 import withStore from "./hoc/withStore";
 import TodoStore from "./stores/TodoStore";
-import "../ReactotronConfig";
+import { setup } from "../ReactotronConfig";
 
 const todoStore = TodoStore.create();
+
+setup(todoStore);
 
 Navigation.registerComponent("TodoScreen", () => withStore(TodoScreen, todoStore));
 
