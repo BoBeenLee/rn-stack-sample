@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "test": "jest",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "storybook": "storybook start -p 7007 --skip-packager | react-native start --projectRoot storybook"
   },
   "dependencies": {
     "@types/yup": "^0.26.2",
@@ -22,6 +23,10 @@
     "yup": "^0.26.6"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^4.0.8",
+    "@storybook/addon-links": "^4.0.8",
+    "@storybook/addons": "^4.0.8",
+    "@storybook/react-native": "^4.0.8",
     "@types/enzyme": "^3.1.14",
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "23.3.2",
@@ -30,6 +35,10 @@
     "@types/react-native-orientation": "^5.0.1",
     "@types/react-native-vector-icons": "^4.6.3",
     "@types/react-test-renderer": "16.0.2",
+    "@types/storybook__addon-actions": "^3.4.1",
+    "@types/storybook__addon-links": "^3.3.3",
+    "@types/storybook__react-native": "^3.0.2",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^9.0.0",
     "babel-jest": "23.6.0",
     "enzyme": "^3.6.0",
@@ -39,7 +48,7 @@
     "jest": "23.6.0",
     "jest-fetch-mock": "^1.6.6",
     "metro-react-native-babel-preset": "0.45.3",
-    "react-dom": "^16.5.1",
+    "react-dom": "^16.6.3",
     "react-test-renderer": "16.5.0",
     "ts-jest": "^23.1.4",
     "typescript": "3.0.3"
