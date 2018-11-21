@@ -1,8 +1,13 @@
 import { Navigation } from "react-native-navigation";
 
 import TodoScreen from "./screens/TodoScreen";
+import withStore from "./hoc/withStore";
+import TodoStore from "./stores/TodoStore";
+import "../ReactotronConfig";
 
-Navigation.registerComponent("TodoScreen", () => TodoScreen);
+const todoStore = TodoStore.create();
+
+Navigation.registerComponent("TodoScreen", () => withStore(TodoScreen, todoStore));
 
 function start() {
   Navigation.events().registerAppLaunchedListener(() => {
