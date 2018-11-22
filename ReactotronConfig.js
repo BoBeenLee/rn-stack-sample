@@ -1,4 +1,4 @@
-import Reactotron from "reactotron-react-native";
+import Reactotron, { storybook } from "reactotron-react-native";
 import { mst } from "reactotron-mst";
 import _ from "lodash";
 
@@ -8,7 +8,9 @@ export const setup = store => {
     .use(mst())
     .connect();
 
-  Reactotron.trackMstNode(store);
+  if (store) {
+    Reactotron.trackMstNode(store);
+  }
   Reactotron.use(__ => ({
     onCommand: async ({ type, payload }) => {
       if (type === "custom" && payload === "addTodo") {
@@ -16,6 +18,7 @@ export const setup = store => {
       }
     }
   }));
+  console.tron = Reactotron;
 };
 
 export const withOverlay = App => {

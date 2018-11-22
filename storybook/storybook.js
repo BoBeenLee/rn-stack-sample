@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { getStorybookUI, configure } from "@storybook/react-native";
 import { Navigation } from "react-native-navigation";
+import { setup } from "../ReactotronConfig";
+
+setup();
 
 configure(() => {
   require("./stories");
@@ -13,6 +16,8 @@ class StorybookUIHMRRoot extends Component {
     return <StorybookUIRoot />;
   }
 }
+
+console.tron.log(console.tron.storybookSwitcher(StorybookUIHMRRoot));
 
 Navigation.registerComponent("storybook.UI", () => StorybookUIHMRRoot);
 

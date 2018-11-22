@@ -16,6 +16,8 @@ const Container = styled.View`
   background-color: #fff;
 `;
 
+// TODO: FOrmik 적용
+
 const TodoList = styled(FlatList).attrs({})``;
 
 @inject(
