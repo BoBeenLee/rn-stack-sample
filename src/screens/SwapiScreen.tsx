@@ -10,10 +10,13 @@ interface IInject {
   swapiStore: ISwapiStore;
 }
 
+
+const Container = styled.View`
+  flex: 1;
+  background-color: #fff;
+`;
+
 const FilmList = styled(FlatList).attrs({})``;
-
-const Container = styled.View``;
-
 const Text = styled.Text``;
 
 @inject(

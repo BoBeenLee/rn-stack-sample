@@ -11,7 +11,10 @@ interface IInject {
   todoStore: ITodoStore;
 }
 
-const Container = styled.View``;
+const Container = styled.View`
+  flex: 1;
+  background-color: #fff;
+`;
 
 const TodoList = styled(FlatList).attrs({})``;
 

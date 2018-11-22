@@ -2,11 +2,16 @@ import React, { Component } from "react";
 import { Navigation } from "react-native-navigation";
 import styled from "styled-components/native";
 
+import { pushTransition } from "./styles/animation";
+
 interface IProps {
   componentId: string;
 }
 
-const Container = styled.View``;
+const Container = styled.View`
+  flex: 1;
+  background-color: #fff;
+`;
 
 const NavigateButton = styled.Button``;
 
@@ -24,7 +29,10 @@ class AppScreen extends Component<IProps> {
     const { componentId } = this.props;
     Navigation.push(componentId, {
       component: {
-        name: "TodoScreen"
+        name: "TodoScreen",
+        options: {
+          animations: pushTransition as any
+        }
       }
     });
   };
@@ -33,7 +41,10 @@ class AppScreen extends Component<IProps> {
     const { componentId } = this.props;
     Navigation.push(componentId, {
       component: {
-        name: "SwapiScreen"
+        name: "SwapiScreen",
+        options: {
+          animations: pushTransition as any
+        }
       }
     });
   };
