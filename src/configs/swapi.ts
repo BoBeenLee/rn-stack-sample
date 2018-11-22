@@ -10,7 +10,7 @@ const httpLink = createHttpLink({
     uri: URI
 });
 
-const apiFetch: IFetch = (query, variables) => {
+const swapiFetch: IFetch = (query, variables) => {
     const operationQuery = gql(query);
 
     const operation = {
@@ -23,4 +23,4 @@ const apiFetch: IFetch = (query, variables) => {
     });
 };
 
-export default apiFetch;
+export default swapiFetch;

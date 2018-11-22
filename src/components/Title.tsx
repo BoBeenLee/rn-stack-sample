@@ -1,18 +1,14 @@
-import React, { SFC } from 'react';
-import styled from 'styled-components/native';
+import React, { SFC } from "react";
+import styled from "styled-components/native";
 
 interface IProps {
-    title: string;
+  children: string | JSX.Element;
 }
 
 const Container = styled.Text``;
 
-const Title: SFC<IProps> = ({ title }) => {
-    return (
-        <Container>
-            {title}
-        </Container>
-    );
+const Title: SFC<IProps> = ({ children }) => {
+  return <Container>{children}</Container>;
 };
 
 export default Title;

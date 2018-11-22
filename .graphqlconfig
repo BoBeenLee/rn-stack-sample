@@ -1,0 +1,9 @@
+{
+  "extensions": {
+    "endpoints": {
+      "swapi": {
+         "url": "https://github.com/graphql/swapi-graphql"
+      },
+    }
+  }
+}

@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { inject, observer } from "mobx-react/native";
-import { FlatList, Text } from 'react-native';
+import { FlatList, Text } from "react-native";
 import styled from "styled-components/native";
 
 import { Title } from "../components";
-import { ITodoStore } from "../stores/TodoStore";
+import { IStores } from "../stores/RootStore";
+import { ITodoStore, getTodoStore } from "../stores/TodoStore";
 
 interface IInject {
-    toastStore: ITodoStore;
+  todoStore: ITodoStore;
 }
 
 const Container = styled.View``;
@@ -15,34 +16,32 @@ const Container = styled.View``;
 const TodoList = styled(FlatList).attrs({})``;
 
 @inject(
-    (stores: any): IInject => ({
-        toastStore: stores.store
-    })
+  (stores: IStores): IInject => ({
+    todoStore: getTodoStore(stores)
+  })
 )
 @observer
 class TodoScreen extends Component {
-    public render() {
-        return (
-            <Container>
-                <Title title="Todo List" />
-                <TodoList
-                    data={["1", "2", "3"]}
-                    keyExtractor={this.todoKeyExtractor}
-                    renderItem={this.renderTodoItem}
-                />
-            </Container>
-        );
-    }
+  public render() {
+    return (
+      <Container>
+        <Title>Todo</Title>
+        <TodoList
+          data={["1", "2", "3"]}
+          keyExtractor={this.todoKeyExtractor}
+          renderItem={this.renderTodoItem}
+        />
+      </Container>
+    );
+  }
 
-    private todoKeyExtractor = (__: any, index: number) => {
-        return `todo${index}`
-    };
+  private todoKeyExtractor = (__: any, index: number) => {
+    return `todo${index}`;
+  };
 
-    private renderTodoItem = () => {
-        return (<Text>
-            Hello World
-        </Text>);
-    };
+  private renderTodoItem = () => {
+    return <Text>Hello World</Text>;
+  };
 }
 
 export default TodoScreen;
