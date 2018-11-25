@@ -1,31 +1,36 @@
-import React from "react";
+import React, { SFC } from "react";
 import styled from "styled-components/native";
 
-const Container = styled.View`
+import Title from "./Title";
+
+interface IProps {
+  title: string;
+  created: string;
+  openingCrawl: string;
+}
+
+const Container = styled.View``;
+
+const Header = styled.View``;
+
+const Date = styled.Text``;
+
+const Content = styled.View``;
+
+const Text = styled.Text`
   flex: 1;
+  text-align: center;
 `;
 
-const Header = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const HeaderTitle = styled.Text``;
-
-const HeaderDate = styled.Text``;
-
-const Content = styled.Text`
-  flex: 1;
-`;
-
-const FilmCard = () => {
+const FilmCard: SFC<IProps> = ({ title, created, openingCrawl }) => {
   return (
     <Container>
       <Header>
-        <HeaderTitle>Title</HeaderTitle>
-        <HeaderDate>Date</HeaderDate>
+        <Title>{title}</Title>
       </Header>
-      <Content>Content</Content>
+      <Content>
+        <Text>{openingCrawl}</Text>
+      </Content>
     </Container>
   );
 };

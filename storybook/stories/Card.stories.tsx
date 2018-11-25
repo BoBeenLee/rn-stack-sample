@@ -10,6 +10,20 @@ const Container = styled.View`
   width: 300px;
 `;
 
+const film = {
+  "id": "ZmlsbXM6MQ==",
+  "title": "A New Hope",
+  "episodeID": 4,
+  "created": "2014-12-10T14:23:31.880Z",
+  "openingCrawl": "It is a period of civil war.\r\nRebel spaceships, striking\r\nfrom a hidden base, have won\r\ntheir first victory against\r\nthe evil Galactic Empire.\r\n\r\nDuring the battle, Rebel\r\nspies managed to steal secret\r\nplans to the Empire's\r\nultimate weapon, the DEATH\r\nSTAR, an armored space\r\nstation with enough power\r\nto destroy an entire planet.\r\n\r\nPursued by the Empire's\r\nsinister agents, Princess\r\nLeia races home aboard her\r\nstarship, custodian of the\r\nstolen plans that can save her\r\npeople and restore\r\nfreedom to the galaxy....",
+  "director": "George Lucas",
+  "producers": [
+    "Gary Kurtz",
+    "Rick McCallum"
+  ]
+};
+
+
 storiesOf("Card", module)
   .addDecorator((getStory: any) => <Container>{getStory()}</Container>)
-  .add("FilmCard", () => <FilmCard />);
+  .add("FilmCard", () => <FilmCard title={film.title} created={film.created} openingCrawl={film.openingCrawl} />);

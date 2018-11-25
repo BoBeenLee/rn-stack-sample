@@ -27,9 +27,9 @@ export interface IFilmItem {
 }
 
 const SwapiStore = types.model("SwapiStore", {}).actions(self => {
-  const fetchFilms = flow(function*() {
+  const fetchFilms = flow<IFilmItem[]>(function* () {
     const response = yield swapiFetch(ALL_FILMS);
-    return response.allFilms.films;
+    return _.get(response, ["data", "allFilms", "films"], []);
   });
   return {
     fetchFilms

@@ -1,22 +1,29 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react/native";
-import { FlatList } from "react-native";
+import { FlatList, FlatListProps, ListRenderItemInfo } from "react-native";
 import styled from "styled-components/native";
 
-import { Title } from "../components";
-import { ISwapiStore, getSwapiStore } from "../stores/SwapiStore";
+import { FilmCard, Title } from "../components";
+import { IFilmItem, ISwapiStore, getSwapiStore } from "../stores/SwapiStore";
 
 interface IInject {
   swapiStore: ISwapiStore;
 }
 
+interface IProps extends IInject {
+  componentId: string;
+}
+
+interface IStates {
+  films: IFilmItem[];
+}
 
 const Container = styled.View`
   flex: 1;
   background-color: #fff;
 `;
 
-const FilmList = styled(FlatList).attrs({})``;
+const FilmList = styled<FlatListProps<IFilmItem>>(FlatList).attrs({})``;
 const Text = styled.Text``;
 
 @inject(
@@ -25,13 +32,29 @@ const Text = styled.Text``;
   })
 )
 @observer
-class SwapiScreen extends Component {
+class SwapiScreen extends Component<IProps, IStates> {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      films: []
+    };
+  }
+
+  public async componentDidMount() {
+    const { fetchFilms } = this.props.swapiStore;
+    this.setState({
+      films: await fetchFilms()
+    });
+  }
+
   public render() {
+    const { films } = this.state;
     return (
       <Container>
         <Title>Swapi Film</Title>
         <FilmList
-          data={["1", "2", "3"]}
+          data={films}
           keyExtractor={this.filmKeyExtractor}
           renderItem={this.renderFilmItem}
         />
@@ -43,8 +66,13 @@ class SwapiScreen extends Component {
     return `film${index}`;
   };
 
-  private renderFilmItem = () => {
-    return <Text>Hello World</Text>;
+  private renderFilmItem = (props: ListRenderItemInfo<IFilmItem>) => {
+    const { title, created, openingCrawl } = props.item;
+    return (<FilmCard
+      title={title}
+      created={created}
+      openingCrawl={openingCrawl}
+    />);
   };
 }
 

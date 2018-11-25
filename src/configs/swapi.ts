@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 
 export type IFetch = (query: string | object, variables?: object) => Promise<any>;
 
-const URI = "https://github.com/graphql/swapi-graphql";
+const URI = "https://swapi.apis.guru/";
 
 const httpLink = createHttpLink({
     uri: URI
