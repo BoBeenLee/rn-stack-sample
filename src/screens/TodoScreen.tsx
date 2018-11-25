@@ -1,3 +1,4 @@
+import { InputItem } from 'antd-mobile-rn';
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react/native";
 import { FlatList, Text } from "react-native";
@@ -31,6 +32,20 @@ class TodoScreen extends Component {
     return (
       <Container>
         <Title>Todo</Title>
+        <InputItem
+          clear={true}
+          error={true}
+          value={"Hello"}
+          onChange={(value: any) => {
+            this.setState({
+              value,
+            });
+          }}
+          extra="元"
+          placeholder="有标签"
+        >
+          输入框
+        </InputItem>
         <TodoList
           data={["1", "2", "3"]}
           keyExtractor={this.todoKeyExtractor}

@@ -1,14 +1,27 @@
 import React, { Component } from 'react';
+import { TextProps } from 'react-native';
 import styled from 'styled-components/native';
+
+interface IProps {
+    style?: TextProps;
+    type: "default" | "primary";
+    children: string;
+    onPress?: () => void;
+}
+
+const TouchabledContainer = styled.TouchableOpacity``;
 
 const Container = styled.Text``;
 
-class Button extends Component {
+class Button extends Component<IProps> {
     public render() {
+        const { style, children, onPress } = this.props;
         return (
-            <Container>
-                Button
-            </Container>
+            <TouchabledContainer onPress={onPress}>
+                <Container style={style}>
+                    {children}
+                </Container>
+            </TouchabledContainer>
         );
     }
 }
