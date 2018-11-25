@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react/native";
 import { FlatList, FlatListProps, ListRenderItemInfo } from "react-native";
+import moment from "moment";
 import styled from "styled-components/native";
 
 import { FilmCard, Title } from "../components";
@@ -70,7 +71,7 @@ class SwapiScreen extends Component<IProps, IStates> {
     const { title, created, openingCrawl } = props.item;
     return (<FilmCard
       title={title}
-      created={created}
+      created={moment(created).format("YYYY-MM-DD")}
       openingCrawl={openingCrawl}
     />);
   };
