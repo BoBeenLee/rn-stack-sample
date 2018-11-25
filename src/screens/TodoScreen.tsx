@@ -33,18 +33,16 @@ class TodoScreen extends Component {
       <Container>
         <Title>Todo</Title>
         <InputItem
-          clear={true}
-          error={true}
           value={"Hello"}
           onChange={(value: any) => {
             this.setState({
               value,
             });
           }}
-          extra="元"
-          placeholder="有标签"
+          extra="추가"
+          placeholder="텍스트를 입력하세요"
         >
-          输入框
+          할 것
         </InputItem>
         <TodoList
           data={["1", "2", "3"]}

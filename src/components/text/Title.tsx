@@ -1,7 +1,9 @@
 import React, { SFC } from "react";
+import { ViewStyle } from "react-native";
 import styled from "styled-components/native";
 
 interface IProps {
+  style?: ViewStyle;
   children: string | JSX.Element;
 }
 
