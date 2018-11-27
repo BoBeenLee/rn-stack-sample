@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { flow, getRoot, Instance, types } from "mobx-state-tree";
 import Todo, { ITodo } from "./Todo";
+import { delay } from "../utils/common";
 
 const PREFIX_TODO_ID = "todo";
 
@@ -26,13 +27,13 @@ const TodoStore = types
       );
     };
 
-    const afterCreate = () => {
+    const afterAttach = () => {
       addTodo("Hell");
       addTodo("lo");
     };
 
     return {
-      afterCreate,
+      afterAttach,
       addTodo
     };
   });
