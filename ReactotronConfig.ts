@@ -15,9 +15,9 @@ export const setup = (store: IRootStore) => {
   Reactotron.use(__ => ({
     onCommand: async ({ type, payload }) => {
       if (type === "custom" && payload === "addTodo") {
-        store.todoStore.addTodo(`${_.uniqueId("hello")}`);
+        store.todoStore.addTodo(`${_.uniqueId("helloworld")}`);
       } else if (type === "custom" && payload === "todoReset") {
-        store.todoStore.todos.clear();
+        store.todoStore.reset();
       }
     }
   }));

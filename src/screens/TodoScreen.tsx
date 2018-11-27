@@ -1,7 +1,7 @@
 import { FormikProps } from "formik";
 import { InputItem } from "antd-mobile-rn";
 import React, { Component } from "react";
-import { inject, observer } from "mobx-react/native";
+import { inject, observer, Observer } from "mobx-react/native";
 import {
   FlatList,
   FlatListProps,
@@ -63,7 +63,6 @@ const DEFAULT_TODO_VALUES = {
 class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
   public render() {
     const { todoText } = this.props.values;
-    const { todosByOrderDESC } = this.props.todoStore;
     return (
       <Container>
         <Title>Todo</Title>
@@ -76,11 +75,15 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
         >
           할 것
         </InputItem>
-        <TodoList
-          data={todosByOrderDESC}
-          keyExtractor={this.todoKeyExtractor}
-          renderItem={this.renderTodoItem}
-        />
+        <Observer>{() => {
+          const { todosByOrderDESC } = this.props.todoStore;
+          return (<TodoList
+            data={todosByOrderDESC}
+            keyExtractor={this.todoKeyExtractor}
+            renderItem={this.renderTodoItem}
+          />);
+        }}</Observer>
+
       </Container>
     );
   }

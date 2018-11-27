@@ -17,6 +17,10 @@ const TodoStore = types
     }
   })
   .actions(self => {
+    const reset = () => {
+      self.todos.clear();
+    };
+
     const addTodo = (name: string) => {
       self.todos.push(
         Todo.create({
@@ -34,7 +38,8 @@ const TodoStore = types
 
     return {
       afterAttach,
-      addTodo
+      addTodo,
+      reset
     };
   });
 
