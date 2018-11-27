@@ -33,7 +33,11 @@ const Container = styled.View`
   background-color: #fff;
 `;
 
-const TodoList = styled<FlatListProps<ITodo>>(FlatList).attrs({})``;
+const TodoList = styled<FlatListProps<ITodo>>(FlatList).attrs({
+  contentContainerStyle: {
+    marginTop: 10
+  }
+})``;
 
 const DEFAULT_TODO_VALUES = {
   todoText: ""
