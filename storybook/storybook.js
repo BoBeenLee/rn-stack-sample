@@ -17,8 +17,6 @@ class StorybookUIHMRRoot extends Component {
   }
 }
 
-console.tron.log(console.tron.storybookSwitcher(StorybookUIHMRRoot));
-
 Navigation.registerComponent("storybook.UI", () => StorybookUIHMRRoot);
 
 Navigation.events().registerAppLaunchedListener(() => {
