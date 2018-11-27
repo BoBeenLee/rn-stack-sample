@@ -2,7 +2,7 @@
   "extensions": {
     "endpoints": {
       "swapi": {
-         "url": "https://github.com/graphql/swapi-graphql"
+         "url": "https://swapi.apis.guru/"
       },
     }
   }
