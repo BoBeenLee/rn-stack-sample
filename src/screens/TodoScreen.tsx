@@ -50,9 +50,10 @@ const DEFAULT_TODO_VALUES = {
 )
 @observer
 @withForm<IProps, IFormStates>({
-  handleSubmit: (values, { props }) => {
+  handleSubmit: (values, { props, setFieldValue }) => {
     const { addTodo } = props.todoStore;
     addTodo(values.todoText);
+    setFieldValue("todoText", "");
   },
   mapPropsToValues: () => {
     return DEFAULT_TODO_VALUES;
@@ -102,9 +103,8 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
   };
 
   private submit = () => {
-    const { submitForm, setFieldValue } = this.props;
+    const { submitForm } = this.props;
     submitForm();
-    setFieldValue("todoText", "");
   };
 }
 
