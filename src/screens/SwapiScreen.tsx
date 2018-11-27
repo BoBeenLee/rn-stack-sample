@@ -6,7 +6,7 @@ import styled from "styled-components/native";
 
 import { FilmCard, Title } from "../components";
 import { IFilmItem, ISwapiStore, getSwapiStore } from "../stores/SwapiStore";
-import { ILoadingProps } from "../hoc/withLoading";
+import withLoading, { ILoadingProps } from "../hoc/withLoading";
 
 interface IInject {
   swapiStore: ISwapiStore;
@@ -37,6 +37,7 @@ const FilmList = styled<FlatListProps<IFilmItem>>(FlatList).attrs({})``;
     swapiStore: getSwapiStore(stores)
   })
 )
+@withLoading
 @observer
 class SwapiScreen extends Component<IProps, IStates> {
   constructor(props: IProps) {
@@ -46,7 +47,7 @@ class SwapiScreen extends Component<IProps, IStates> {
       refresh: false
     };
     this.initialize = props.wrapperLoading(this.initialize, true);
-    this.initialize = props.wrapperLoading(this.refresh, false);
+    this.refresh = props.wrapperLoading(this.refresh, false);
   }
 
   public componentDidMount() {
