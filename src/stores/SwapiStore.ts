@@ -26,8 +26,8 @@ export interface IFilmItem {
   openingCrawl: string;
 }
 
-const SwapiStore = types.model("SwapiStore", {}).actions(self => {
-  const fetchFilms = flow<IFilmItem[]>(function* () {
+const SwapiStore = types.model("SwapiStore", {}).actions(__ => {
+  const fetchFilms = flow<IFilmItem[]>(function*() {
     const response = yield swapiFetch(ALL_FILMS);
     return _.get(response, ["data", "allFilms", "films"], []);
   });
