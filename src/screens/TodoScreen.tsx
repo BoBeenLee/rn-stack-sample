@@ -1,15 +1,31 @@
-import { InputItem } from 'antd-mobile-rn';
+import { FormikProps } from "formik";
+import { InputItem } from "antd-mobile-rn";
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react/native";
-import { FlatList, Text } from "react-native";
+import {
+  FlatList,
+  FlatListProps,
+  Text,
+  ListRenderItemInfo
+} from "react-native";
 import styled from "styled-components/native";
 
 import { Title } from "../components";
 import { IStores } from "../stores/RootStore";
+import { ITodo } from "../stores/Todo";
 import { ITodoStore, getTodoStore } from "../stores/TodoStore";
+import withForm from "../hoc/withForm";
 
 interface IInject {
   todoStore: ITodoStore;
+}
+
+interface IProps extends IInject {
+  componentId: string;
+}
+
+interface IFormStates {
+  todoText: string;
 }
 
 const Container = styled.View`
@@ -17,9 +33,11 @@ const Container = styled.View`
   background-color: #fff;
 `;
 
-// TODO: FOrmik 적용
+const TodoList = styled<FlatListProps<ITodo>>(FlatList).attrs({})``;
 
-const TodoList = styled(FlatList).attrs({})``;
+const DEFAULT_TODO_VALUES = {
+  todoText: ""
+};
 
 @inject(
   (stores: IStores): IInject => ({
@@ -27,25 +45,33 @@ const TodoList = styled(FlatList).attrs({})``;
   })
 )
 @observer
-class TodoScreen extends Component {
+@withForm<IProps, IFormStates>({
+  handleSubmit: (values, { props }) => {
+    const { addTodo } = props.todoStore;
+    addTodo(values.todoText);
+  },
+  mapPropsToValues: () => {
+    return DEFAULT_TODO_VALUES;
+  }
+})
+class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
   public render() {
+    const { todoText } = this.props.values;
+    const { todos } = this.props.todoStore;
     return (
       <Container>
         <Title>Todo</Title>
         <InputItem
-          value={"Hello"}
-          onChange={(value: any) => {
-            this.setState({
-              value,
-            });
-          }}
+          value={todoText}
+          onChange={this.onTodoTextChange}
           extra="추가"
+          onExtraClick={this.submit}
           placeholder="텍스트를 입력하세요"
         >
           할 것
         </InputItem>
         <TodoList
-          data={["1", "2", "3"]}
+          data={todos}
           keyExtractor={this.todoKeyExtractor}
           renderItem={this.renderTodoItem}
         />
@@ -53,12 +79,27 @@ class TodoScreen extends Component {
     );
   }
 
-  private todoKeyExtractor = (__: any, index: number) => {
-    return `todo${index}`;
+  private onTodoTextChange = (text: string) => {
+    const { setFieldValue } = this.props;
+    setFieldValue("todoText", text);
   };
 
-  private renderTodoItem = () => {
-    return <Text>Hello World</Text>;
+  private todoKeyExtractor = (item: ITodo, __: number) => {
+    return `todo${item.id}`;
+  };
+
+  private renderTodoItem = (props: ListRenderItemInfo<ITodo>) => {
+    const { id, name, order } = props.item;
+    return (
+      <Text>
+        {order} - {name}
+      </Text>
+    );
+  };
+
+  private submit = () => {
+    const { submitForm } = this.props;
+    submitForm();
   };
 }
 
