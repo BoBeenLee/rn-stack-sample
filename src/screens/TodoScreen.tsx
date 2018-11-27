@@ -95,7 +95,7 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
   };
 
   private renderTodoItem = (props: ListRenderItemInfo<ITodo>) => {
-    const { id, name, order } = props.item;
+    const { name, order } = props.item;
     return (
       <Text>
         {order} - {name}
