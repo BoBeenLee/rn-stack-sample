@@ -1,20 +1,27 @@
 import _ from "lodash";
 import { flow, getRoot, Instance, types } from "mobx-state-tree";
-import Todo from "./Todo";
+import Todo, { ITodo } from "./Todo";
 
 const PREFIX_TODO_ID = "todo";
 
 const TodoStore = types
   .model("TodoStore", {
-    todos: types.optional(types.map(Todo), {})
+    todos: types.optional(types.array(Todo), [])
+  })
+  .views(self => {
+    return {
+      get todosByOrderDESC() {
+        return self.todos.reverse();
+      }
+    }
   })
   .actions(self => {
     const addTodo = (name: string) => {
-      self.todos.put(
+      self.todos.push(
         Todo.create({
           name,
           id: _.uniqueId(PREFIX_TODO_ID),
-          order: self.todos.size
+          order: self.todos.length + 1
         })
       );
     };

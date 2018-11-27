@@ -57,7 +57,7 @@ const DEFAULT_TODO_VALUES = {
 class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
   public render() {
     const { todoText } = this.props.values;
-    const { todos } = this.props.todoStore;
+    const { todosByOrderDESC } = this.props.todoStore;
     return (
       <Container>
         <Title>Todo</Title>
@@ -71,7 +71,7 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
           할 것
         </InputItem>
         <TodoList
-          data={todos}
+          data={todosByOrderDESC}
           keyExtractor={this.todoKeyExtractor}
           renderItem={this.renderTodoItem}
         />
@@ -98,8 +98,9 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
   };
 
   private submit = () => {
-    const { submitForm } = this.props;
+    const { submitForm, setFieldValue } = this.props;
     submitForm();
+    setFieldValue("todoText", "");
   };
 }
 
