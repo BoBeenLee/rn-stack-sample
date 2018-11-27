@@ -6,16 +6,18 @@ import styled from "styled-components/native";
 
 import { FilmCard, Title } from "../components";
 import { IFilmItem, ISwapiStore, getSwapiStore } from "../stores/SwapiStore";
+import { ILoadingProps } from "../hoc/withLoading";
 
 interface IInject {
   swapiStore: ISwapiStore;
 }
 
-interface IProps extends IInject {
+interface IProps extends IInject, ILoadingProps {
   componentId: string;
 }
 
 interface IStates {
+  refresh: boolean;
   films: IFilmItem[];
 }
 
@@ -24,8 +26,11 @@ const Container = styled.View`
   background-color: #fff;
 `;
 
+const FilmTitle = styled(Title)`
+  padding-bottom: 0px;
+`;
+
 const FilmList = styled<FlatListProps<IFilmItem>>(FlatList).attrs({})``;
-const Text = styled.Text``;
 
 @inject(
   (stores: any): IInject => ({
@@ -34,34 +39,52 @@ const Text = styled.Text``;
 )
 @observer
 class SwapiScreen extends Component<IProps, IStates> {
-
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
-      films: []
+      films: [],
+      refresh: false
     };
+    this.initialize = props.wrapperLoading(this.initialize, true);
+    this.initialize = props.wrapperLoading(this.refresh, false);
   }
 
-  public async componentDidMount() {
-    const { fetchFilms } = this.props.swapiStore;
-    this.setState({
-      films: await fetchFilms()
-    });
+  public componentDidMount() {
+    this.initialize();
   }
 
   public render() {
-    const { films } = this.state;
+    const { films, refresh } = this.state;
     return (
       <Container>
-        <Title>Swapi Film</Title>
         <FilmList
+          ListHeaderComponent={<FilmTitle>Swapi Film</FilmTitle>}
           data={films}
           keyExtractor={this.filmKeyExtractor}
           renderItem={this.renderFilmItem}
+          refreshing={refresh}
+          onRefresh={this.refresh}
         />
       </Container>
     );
   }
+
+  private initialize = async () => {
+    await this.fetchFilms();
+  };
+
+  private refresh = async () => {
+    this.setState({ refresh: true });
+    await this.fetchFilms();
+    this.setState({ refresh: false });
+  };
+
+  private fetchFilms = async () => {
+    const { fetchFilms } = this.props.swapiStore;
+    this.setState({
+      films: await fetchFilms()
+    });
+  };
 
   private filmKeyExtractor = (__: any, index: number) => {
     return `film${index}`;
@@ -69,11 +92,13 @@ class SwapiScreen extends Component<IProps, IStates> {
 
   private renderFilmItem = (props: ListRenderItemInfo<IFilmItem>) => {
     const { title, created, openingCrawl } = props.item;
-    return (<FilmCard
-      title={title}
-      created={moment(created).format("YYYY-MM-DD")}
-      openingCrawl={openingCrawl}
-    />);
+    return (
+      <FilmCard
+        title={title}
+        created={moment(created).format("YYYY-MM-DD")}
+        openingCrawl={openingCrawl}
+      />
+    );
   };
 }
 

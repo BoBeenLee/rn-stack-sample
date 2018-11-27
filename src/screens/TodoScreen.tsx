@@ -35,7 +35,8 @@ const Container = styled.View`
 
 const TodoList = styled<FlatListProps<ITodo>>(FlatList).attrs({
   contentContainerStyle: {
-    marginTop: 10
+    marginTop: 15,
+    paddingHorizontal: 10
   }
 })``;
 
