@@ -3,7 +3,7 @@
     "endpoints": {
       "swapi": {
          "url": "https://swapi.apis.guru/"
-      },
+      }
     }
   }
 }
