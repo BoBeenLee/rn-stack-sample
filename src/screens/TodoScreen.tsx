@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import styled from "styled-components/native";
 
-import { Title } from "../components";
+import { Title, TodoCard } from "../components";
 import { IStores } from "../stores/RootStore";
 import { ITodo } from "../stores/Todo";
 import { ITodoStore, getTodoStore } from "../stores/TodoStore";
@@ -38,10 +38,6 @@ const TodoList = styled<FlatListProps<ITodo>>(FlatList).attrs({
     paddingHorizontal: 15
   }
 })``;
-
-const TodoItem = styled.Text`
-  font-size: 20px;
-`;
 
 const DEFAULT_TODO_VALUES = {
   todoText: ""
@@ -103,9 +99,7 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
   private renderTodoItem = (props: ListRenderItemInfo<ITodo>) => {
     const { name, order } = props.item;
     return (
-      <TodoItem>
-        {order} - {name}
-      </TodoItem>
+      <TodoCard order={order} content={name} />
     );
   };
 

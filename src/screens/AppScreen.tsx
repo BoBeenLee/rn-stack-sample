@@ -20,7 +20,8 @@ class AppScreen extends Component<IProps> {
     return (
       <Container>
         <NavigateButton title="Todo" onPress={this.navigateTodo} />
-        <NavigateButton title="Swapi" onPress={this.navigateSwapi} />
+        <NavigateButton title="Swapi List" onPress={this.navigateSwapi} />
+        <NavigateButton title="Throw Error" onPress={this.navigateThrowError} />
       </Container>
     );
   }
@@ -36,6 +37,18 @@ class AppScreen extends Component<IProps> {
       }
     });
   };
+
+  private navigateThrowError = () => {
+    const { componentId } = this.props;
+    Navigation.push(componentId, {
+      component: {
+        name: "ErrorScreen",
+        options: {
+          animations: pushTransition as any
+        }
+      }
+    });
+  }
 
   private navigateSwapi = () => {
     const { componentId } = this.props;

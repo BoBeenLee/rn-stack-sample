@@ -2,8 +2,8 @@ import React, { SFC } from "react";
 import { ViewStyle } from "react-native";
 import styled from "styled-components/native";
 
-import Date from "./text/Date";
-import Title from "./text/Title";
+import Date from "../text/Date";
+import Title from "../text/Title";
 
 interface IProps {
   style?: ViewStyle;

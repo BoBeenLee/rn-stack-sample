@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { storiesOf } from "@storybook/react-native";
 import { action } from "@storybook/addon-actions";
 import { linkTo } from "@storybook/addon-links";
-import { FilmCard } from "../../src/components";
+import { FilmCard, TodoCard } from "../../src/components";
 
 const Container = styled.View`
   flex: 1;
@@ -27,4 +27,5 @@ const film = {
 
 storiesOf("Card", module)
   .addDecorator((getStory: any) => <Container>{getStory()}</Container>)
-  .add("FilmCard", () => <FilmCard title={film.title} created={moment(film.created).format("YYYY-MM-DD")} openingCrawl={film.openingCrawl} />);
+  .add("FilmCard", () => <FilmCard title={film.title} created={moment(film.created).format("YYYY-MM-DD")} openingCrawl={film.openingCrawl} />)
+  .add("TodoCard", () => <TodoCard />);

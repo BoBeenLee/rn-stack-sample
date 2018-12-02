@@ -6,6 +6,14 @@ import SwapiStore from "./SwapiStore";
 const RootStore = types.model("RootStore", {
   todoStore: types.optional(TodoStore, {}),
   swapiStore: types.optional(SwapiStore, {})
+}).actions(self => {
+  const sendError = () => {
+    throw new Error("Hello World");
+  };
+
+  return {
+    sendError
+  }
 });
 
 export type IRootStore = typeof RootStore.Type;

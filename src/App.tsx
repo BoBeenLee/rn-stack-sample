@@ -4,6 +4,7 @@ import { Navigation } from "react-native-navigation";
 import AppScreen from "./screens/AppScreen";
 import TodoScreen from "./screens/TodoScreen";
 import SwapiScreen from "./screens/SwapiScreen";
+import ErrorScreen from "./screens/ErrorScreen";
 import withStore from "./hoc/withStore";
 import RootStore from "./stores/RootStore";
 import { setup, withOverlay } from "../ReactotronConfig";
@@ -24,6 +25,7 @@ Navigation.registerComponent("TodoScreen", () =>
 Navigation.registerComponent("SwapiScreen", () =>
   withStoreAndOverlay(SwapiScreen)
 );
+Navigation.registerComponent("ErrorScreen", () => withStoreAndOverlay(ErrorScreen));
 
 function start() {
   Navigation.events().registerAppLaunchedListener(() => {
