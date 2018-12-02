@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const Container = styled.Text`
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
   padding-vertical: 15px;
   padding-horizontal: 10px;

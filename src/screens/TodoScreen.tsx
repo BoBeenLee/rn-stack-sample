@@ -5,7 +5,6 @@ import { inject, observer, Observer } from "mobx-react/native";
 import {
   FlatList,
   FlatListProps,
-  Text,
   ListRenderItemInfo
 } from "react-native";
 import styled from "styled-components/native";
@@ -36,9 +35,13 @@ const Container = styled.View`
 const TodoList = styled<FlatListProps<ITodo>>(FlatList).attrs({
   contentContainerStyle: {
     marginTop: 15,
-    paddingHorizontal: 10
+    paddingHorizontal: 15
   }
 })``;
+
+const TodoItem = styled.Text`
+  font-size: 20px;
+`;
 
 const DEFAULT_TODO_VALUES = {
   todoText: ""
@@ -100,9 +103,9 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
   private renderTodoItem = (props: ListRenderItemInfo<ITodo>) => {
     const { name, order } = props.item;
     return (
-      <Text>
+      <TodoItem>
         {order} - {name}
-      </Text>
+      </TodoItem>
     );
   };
 

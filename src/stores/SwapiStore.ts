@@ -1,6 +1,8 @@
 import _ from "lodash";
 import { flow, getRoot, Instance, types } from "mobx-state-tree";
+
 import swapiFetch from "../configs/swapi";
+import { delay } from "../utils/common";
 
 const ALL_FILMS = `
 query {
@@ -27,8 +29,9 @@ export interface IFilmItem {
 }
 
 const SwapiStore = types.model("SwapiStore", {}).actions(__ => {
-  const fetchFilms = flow<IFilmItem[]>(function*() {
+  const fetchFilms = flow<IFilmItem[]>(function* () {
     const response = yield swapiFetch(ALL_FILMS);
+    yield delay(2000);
     return _.get(response, ["data", "allFilms", "films"], []);
   });
   return {
