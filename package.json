@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "storybook": "storybook start -p 7007",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator='iPhone 6'",
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "test": "jest",
     "tsc": "tsc",
