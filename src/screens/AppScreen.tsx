@@ -3,6 +3,7 @@ import { Navigation } from "react-native-navigation";
 import styled from "styled-components/native";
 
 import { pushTransition } from "./styles/animation";
+import { SCREEN_IDS } from "./constant";
 
 interface IProps {
   componentId: string;
@@ -30,7 +31,7 @@ class AppScreen extends Component<IProps> {
     const { componentId } = this.props;
     Navigation.push(componentId, {
       component: {
-        name: "TodoScreen",
+        name: SCREEN_IDS.TodoScreen,
         options: {
           animations: pushTransition as any
         }
@@ -54,7 +55,7 @@ class AppScreen extends Component<IProps> {
     const { componentId } = this.props;
     Navigation.push(componentId, {
       component: {
-        name: "SwapiScreen",
+        name: SCREEN_IDS.SwapiScreen,
         options: {
           animations: pushTransition as any
         }

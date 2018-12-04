@@ -9,21 +9,18 @@
     "noEmit": true,
     "sourceMap": true,
     "target": "es2015",
-    "typeRoots": [
-      "./typings",
-      "./node_modules/@types"
-    ],
+    "typeRoots": ["./typings", "./node_modules/@types"],
     "skipLibCheck": true,
     "strict": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "paths": {
+      "assets-json": ["assets/json"]
+    }
   },
-  "exclude": [
-    "node_modules",
-    "**/__mocks__/*",
-    "**/__tests__/*"
-  ]
+  "exclude": ["node_modules", "**/__mocks__/*", "**/__tests__/*"]
 }

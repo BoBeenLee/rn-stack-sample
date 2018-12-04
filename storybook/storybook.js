@@ -17,29 +17,31 @@ class StorybookUIHMRRoot extends Component {
   }
 }
 
-Navigation.registerComponent("storybook.UI", () => StorybookUIHMRRoot);
+function start() {
+  Navigation.registerComponent("storybook.UI", () => StorybookUIHMRRoot);
 
-Navigation.events().registerAppLaunchedListener(() => {
-  Navigation.setDefaultOptions({
-    topBar: {
-      visible: false
-    }
-  });
-
-  Navigation.setRoot({
-    root: {
-      stack: {
-        children: [
-          {
-            component: {
-              name: "storybook.UI"
-            }
-          }
-        ],
-        id: "storybook.UI"
+  Navigation.events().registerAppLaunchedListener(() => {
+    Navigation.setDefaultOptions({
+      topBar: {
+        visible: false
       }
-    }
+    });
+  
+    Navigation.setRoot({
+      root: {
+        stack: {
+          children: [
+            {
+              component: {
+                name: "storybook.UI"
+              }
+            }
+          ],
+          id: "storybook.UI"
+        }
+      }
+    });
   });
-});
+}
 
-export default StorybookUIHMRRoot;
+start();

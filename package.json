@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "storybook": "storybook start -p 7007",
     "ios": "react-native run-ios",
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "test": "jest",
     "tsc": "tsc",
-    "storybook": "storybook start -p 7007 | react-native start --projectRoot storybook",
     "playground": "graphql playground"
   },
   "dependencies": {
@@ -55,6 +55,7 @@
     "babel-eslint": "^9.0.0",
     "babel-jest": "23.6.0",
     "babel-plugin-import": "^1.11.0",
+    "babel-plugin-module-resolver": "^3.1.1",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "eslint": "^5.6.0",

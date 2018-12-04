@@ -1,31 +1,15 @@
 import _ from "lodash";
 import { Navigation } from "react-native-navigation";
 
-import AppScreen from "./screens/AppScreen";
-import TodoScreen from "./screens/TodoScreen";
-import SwapiScreen from "./screens/SwapiScreen";
-import ErrorScreen from "./screens/ErrorScreen";
-import withStore from "./hoc/withStore";
 import RootStore from "./stores/RootStore";
-import { setup, withOverlay } from "../ReactotronConfig";
+import { setup } from "../ReactotronConfig";
+import { registerScreens } from "./screens";
 
 const rootStore = RootStore.create();
 
 setup(rootStore);
 
-const withStoreAndOverlay = _.flow([
-  _.partial(withStore, _, rootStore),
-  withOverlay
-]);
-
-Navigation.registerComponent("AppScreen", () => withStoreAndOverlay(AppScreen));
-Navigation.registerComponent("TodoScreen", () =>
-  withStoreAndOverlay(TodoScreen)
-);
-Navigation.registerComponent("SwapiScreen", () =>
-  withStoreAndOverlay(SwapiScreen)
-);
-Navigation.registerComponent("ErrorScreen", () => withStoreAndOverlay(ErrorScreen));
+registerScreens(rootStore);
 
 function start() {
   Navigation.events().registerAppLaunchedListener(() => {
@@ -55,4 +39,4 @@ function start() {
   });
 }
 
-export default start;
+start();
