@@ -18,6 +18,7 @@ import java.util.List;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -45,7 +46,8 @@ public class MainApplication extends NavigationApplication {
                 new ReactNativeLocalizationPackage(),
                 new RNFirebasePackage(),
                 new RNFirebaseAnalyticsPackage(),
-                new RNFirebaseAuthPackage()
+                new RNFirebaseAuthPackage(),
+                new RNFirebaseRemoteConfigPackage()
         );
     }
 

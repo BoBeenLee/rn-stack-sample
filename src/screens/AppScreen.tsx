@@ -6,6 +6,7 @@ import firebase from "react-native-firebase";
 
 import { pushTransition } from "./styles/animation";
 import { SCREEN_IDS } from "./constant";
+import { REMOTE_CONFIG_VARIABLES } from "../configs/firebase";
 
 interface IProps {
   componentId: string;

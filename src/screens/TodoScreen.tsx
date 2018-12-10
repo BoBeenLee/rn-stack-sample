@@ -11,6 +11,7 @@ import { IStores } from "../stores/RootStore";
 import { ITodo } from "../stores/Todo";
 import { ITodoStore, getTodoStore } from "../stores/TodoStore";
 import withForm from "../hoc/withForm";
+import { REMOTE_CONFIG_VARIABLES } from "../configs/firebase";
 
 interface IInject {
   todoStore: ITodoStore;
@@ -70,7 +71,7 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
           onExtraClick={this.submit}
           placeholder="텍스트를 입력하세요"
         >
-          할 것
+          {REMOTE_CONFIG_VARIABLES.get("todo_name")}
         </InputItem>
         <Observer>
           {() => {

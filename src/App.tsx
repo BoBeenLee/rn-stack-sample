@@ -4,7 +4,9 @@ import { Navigation } from "react-native-navigation";
 import RootStore from "./stores/RootStore";
 import { setup } from "../ReactotronConfig";
 import { registerScreens } from "./screens";
+import { initializeRemoteConfig } from "./configs/firebase";
 
+initializeRemoteConfig();
 const rootStore = RootStore.create();
 
 setup(rootStore);
