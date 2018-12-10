@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Dimensions } from "react-native";
 import { Navigation } from "react-native-navigation";
 import styled from "styled-components/native";
+import firebase from "react-native-firebase";
 
 import { pushTransition } from "./styles/animation";
 import { SCREEN_IDS } from "./constant";
@@ -17,6 +19,22 @@ const Container = styled.View`
 const NavigateButton = styled.Button``;
 
 class AppScreen extends Component<IProps> {
+  public componentDidMount() {
+    firebase
+      .auth()
+      .signInAnonymously()
+      .then(credential => {
+        if (credential) {
+          console.log("default app user ->", credential.user.toJSON());
+        }
+        firebase.analytics().setUserProperties({
+          height: String(Dimensions.get("screen").height),
+          width: String(Dimensions.get("screen").width),
+          username: "anonymous"
+        });
+      });
+  }
+
   public render() {
     return (
       <Container>
@@ -29,6 +47,7 @@ class AppScreen extends Component<IProps> {
 
   private navigateTodo = () => {
     const { componentId } = this.props;
+    firebase.analytics().setCurrentScreen(SCREEN_IDS.TodoScreen);
     Navigation.push(componentId, {
       component: {
         name: SCREEN_IDS.TodoScreen,
@@ -41,18 +60,20 @@ class AppScreen extends Component<IProps> {
 
   private navigateThrowError = () => {
     const { componentId } = this.props;
+    firebase.analytics().setCurrentScreen(SCREEN_IDS.ErrorScreen);
     Navigation.push(componentId, {
       component: {
-        name: "ErrorScreen",
+        name: SCREEN_IDS.ErrorScreen,
         options: {
           animations: pushTransition as any
         }
       }
     });
-  }
+  };
 
   private navigateSwapi = () => {
     const { componentId } = this.props;
+    firebase.analytics().setCurrentScreen(SCREEN_IDS.SwapiScreen);
     Navigation.push(componentId, {
       component: {
         name: SCREEN_IDS.SwapiScreen,

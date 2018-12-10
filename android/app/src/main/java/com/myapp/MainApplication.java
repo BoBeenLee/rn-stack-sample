@@ -16,6 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -41,7 +43,9 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
                 new VectorIconsPackage(), new OrientationPackage(),
                 new ReactNativeLocalizationPackage(),
-                new RNFirebasePackage()
+                new RNFirebasePackage(),
+                new RNFirebaseAnalyticsPackage(),
+                new RNFirebaseAuthPackage()
         );
     }
 

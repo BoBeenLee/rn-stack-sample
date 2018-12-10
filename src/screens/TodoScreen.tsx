@@ -2,12 +2,9 @@ import { FormikProps } from "formik";
 import { InputItem } from "antd-mobile-rn";
 import React, { Component } from "react";
 import { inject, observer, Observer } from "mobx-react/native";
-import {
-  FlatList,
-  FlatListProps,
-  ListRenderItemInfo
-} from "react-native";
+import { FlatList, FlatListProps, ListRenderItemInfo } from "react-native";
 import styled from "styled-components/native";
+import firebase from "react-native-firebase";
 
 import { Title, TodoCard } from "../components";
 import { IStores } from "../stores/RootStore";
@@ -52,6 +49,7 @@ const DEFAULT_TODO_VALUES = {
 @withForm<IProps, IFormStates>({
   handleSubmit: (values, { props, setFieldValue }) => {
     const { addTodo } = props.todoStore;
+    firebase.analytics().logEvent("addTodo", { text: values.todoText });
     addTodo(values.todoText);
     setFieldValue("todoText", "");
   },
@@ -74,15 +72,18 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
         >
           할 것
         </InputItem>
-        <Observer>{() => {
-          const { todosByOrderDESC } = this.props.todoStore;
-          return (<TodoList
-            data={todosByOrderDESC}
-            keyExtractor={this.todoKeyExtractor}
-            renderItem={this.renderTodoItem}
-          />);
-        }}</Observer>
-
+        <Observer>
+          {() => {
+            const { todosByOrderDESC } = this.props.todoStore;
+            return (
+              <TodoList
+                data={todosByOrderDESC}
+                keyExtractor={this.todoKeyExtractor}
+                renderItem={this.renderTodoItem}
+              />
+            );
+          }}
+        </Observer>
       </Container>
     );
   }
@@ -98,9 +99,7 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
 
   private renderTodoItem = (props: ListRenderItemInfo<ITodo>) => {
     const { name, order } = props.item;
-    return (
-      <TodoCard order={order} content={name} />
-    );
+    return <TodoCard order={order} content={name} />;
   };
 
   private submit = () => {
