@@ -15,6 +15,8 @@ import com.reactnativenavigation.react.ReactGateway;
 import java.util.Arrays;
 import java.util.List;
 
+import io.invertase.firebase.RNFirebasePackage;
+
 public class MainApplication extends NavigationApplication {
 
     @Override
@@ -38,7 +40,8 @@ public class MainApplication extends NavigationApplication {
         // No need to add RnnPackage and MainReactPackage
         return Arrays.<ReactPackage>asList(
                 new VectorIconsPackage(), new OrientationPackage(),
-                new ReactNativeLocalizationPackage()
+                new ReactNativeLocalizationPackage(),
+                new RNFirebasePackage()
         );
     }
 

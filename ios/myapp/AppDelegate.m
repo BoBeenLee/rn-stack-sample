@@ -10,6 +10,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <ReactNativeNavigation/ReactNativeNavigation.h>
 #import <React/RCTRootView.h>
+#import <Firebase.h>
 
 #import "Orientation.h"
 
@@ -17,6 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
   NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
   return YES;
