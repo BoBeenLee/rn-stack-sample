@@ -19,6 +19,17 @@ const Container = styled.View`
 const NavigateButton = styled.Button``;
 
 class AppScreen extends Component<IProps> {
+  constructor(props) {
+    super(props);
+
+    firebase.analytics().setUserProperties({
+      height: String(Dimensions.get("screen").height),
+      width: String(Dimensions.get("screen").width),
+      username: "anonymous"
+    });
+    firebase.analytics().setAnalyticsCollectionEnabled(true);
+  }
+
   public componentDidMount() {
     firebase
       .auth()
@@ -27,11 +38,6 @@ class AppScreen extends Component<IProps> {
         if (credential) {
           console.log("default app user ->", credential.user.toJSON());
         }
-        firebase.analytics().setUserProperties({
-          height: String(Dimensions.get("screen").height),
-          width: String(Dimensions.get("screen").width),
-          username: "anonymous"
-        });
       });
   }
 

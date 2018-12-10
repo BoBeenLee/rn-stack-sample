@@ -3,6 +3,7 @@ import { inject, observer } from "mobx-react/native";
 import { FlatList, FlatListProps, ListRenderItemInfo } from "react-native";
 import moment from "moment";
 import styled from "styled-components/native";
+import firebase from "react-native-firebase";
 
 import { FilmCard, Title } from "../components";
 import { IFilmItem, ISwapiStore, getSwapiStore } from "../stores/SwapiStore";
@@ -82,6 +83,8 @@ class SwapiScreen extends Component<IProps, IStates> {
 
   private fetchFilms = async () => {
     const { fetchFilms } = this.props.swapiStore;
+
+    firebase.analytics().logEvent("fetchFilms");
     this.setState({
       films: await fetchFilms()
     });
