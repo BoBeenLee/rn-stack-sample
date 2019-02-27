@@ -1,3 +1,4 @@
+import { inject, observer } from "mobx-react/native";
 import React, { Component } from "react";
 import { Navigation } from "react-native-navigation";
 import styled from "styled-components/native";
@@ -5,17 +6,32 @@ import styled from "styled-components/native";
 import { pushTransition } from "./styles/animation";
 import { SCREEN_IDS } from "./constant";
 
-interface IProps {
+import { INavigator } from "../stores/Navigator";
+import { IStores } from "../stores/RootStore";
+
+interface IInject {
+  navigator: INavigator;
+}
+
+interface IProps extends IInject {
   componentId: string;
 }
 
 const Container = styled.View`
   flex: 1;
+  justify-content: center;
+  align-items: center;
   background-color: #fff;
 `;
 
 const NavigateButton = styled.Button``;
 
+@inject(
+  (stores: IStores): IInject => ({
+    navigator: stores.store.navigator
+  })
+)
+@observer
 class AppScreen extends Component<IProps> {
   public render() {
     return (
@@ -28,8 +44,8 @@ class AppScreen extends Component<IProps> {
   }
 
   private navigateTodo = () => {
-    const { componentId } = this.props;
-    Navigation.push(componentId, {
+    const { componentId, navigator } = this.props;
+    navigator.push(componentId, {
       component: {
         name: SCREEN_IDS.TodoScreen,
         options: {
@@ -40,8 +56,8 @@ class AppScreen extends Component<IProps> {
   };
 
   private navigateThrowError = () => {
-    const { componentId } = this.props;
-    Navigation.push(componentId, {
+    const { componentId, navigator } = this.props;
+    navigator.push(componentId, {
       component: {
         name: "ErrorScreen",
         options: {
@@ -52,8 +68,8 @@ class AppScreen extends Component<IProps> {
   }
 
   private navigateSwapi = () => {
-    const { componentId } = this.props;
-    Navigation.push(componentId, {
+    const { componentId, navigator } = this.props;
+    navigator.push(componentId, {
       component: {
         name: SCREEN_IDS.SwapiScreen,
         options: {

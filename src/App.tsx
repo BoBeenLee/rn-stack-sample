@@ -1,11 +1,11 @@
 import _ from "lodash";
 import { Navigation } from "react-native-navigation";
 
-import RootStore from "./stores/RootStore";
+import { getRootStore } from "./stores/RootStore";
 import { setup } from "../ReactotronConfig";
 import { registerScreens } from "./screens";
 
-const rootStore = RootStore.create();
+const rootStore = getRootStore();
 
 setup(rootStore);
 

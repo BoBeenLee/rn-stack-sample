@@ -4,11 +4,19 @@ import { Navigation } from "react-native-navigation";
 
 import { SCREEN_IDS } from "../screens/constant";
 import { delay } from "../utils/common";
+import { TimeTraveller } from "mst-middlewares";
+
+interface INavigatorProps {
+    layout: any;
+    type: "push" | "pop" | "root";
+}
 
 const Navigator = types
     .model("Navigator", {
         currentComponentId: types.optional(types.string, ""),
         currentComponentName: types.optional(types.string, ""),
+        navigators: types.optional(types.array(types.frozen<INavigatorProps>()), []),
+        history: types.optional(TimeTraveller, { targetPath: "../navigators" }),
         loading: types.optional(types.boolean, false)
     })
     .actions(self => {
@@ -34,14 +42,68 @@ const Navigator = types
 
         const push = flow(function* (componentId: string, layout: any) {
             yield withNavigationLoading(() => {
+                self.navigators.push({
+                    layout,
+                    type: "push"
+                });
                 Navigation.push(componentId, layout);
             }, 1500);
         });
         const pop = flow(function* (componentId: string, params?: any) {
             yield withNavigationLoading(() => {
+                const last = _.last(self.navigators)!;
+                self.navigators.push({
+                    ...last,
+                    type: "pop"
+                });
                 Navigation.pop(componentId, params);
             }, 500);
         });
+
+        const undo = () => {
+            if (self.history.canUndo) {
+                const last = self.navigators[self.navigators.length - 1];
+                undoNavigate(last);
+                self.history.undo();
+            }
+        }
+
+        const redo = () => {
+            if (self.history.canRedo) {
+                self.history.redo();
+                console.log(self.navigators);
+                const last = self.navigators[self.navigators.length - 1];
+                redoNavigate(last);
+            }
+        }
+
+        const afterAttach = () => {
+            self.history.canRedo;
+            self.history.canUndo;
+        };
+
+        const redoNavigate = (navigatorProp: INavigatorProps) => {
+            switch (navigatorProp.type) {
+                case "push":
+                    Navigation.push(self.currentComponentId, navigatorProp.layout);
+                    return;
+                case "pop":
+                    Navigation.pop(self.currentComponentId, {});
+
+                    return;
+            }
+        }
+
+        const undoNavigate = (navigatorProp: INavigatorProps) => {
+            switch (navigatorProp.type) {
+                case "push":
+                    Navigation.pop(self.currentComponentId, {});
+                    return;
+                case "pop":
+                    Navigation.push(self.currentComponentId, navigatorProp.layout);
+                    return;
+            }
+        }
 
         const popTo = flow(function* (componentId: string) {
             yield withNavigationLoading(() => {
@@ -106,6 +168,11 @@ const Navigator = types
                 statusBar: {
                     backgroundColor: "white",
                     style: "dark"
+                },
+                topBar: {
+                    animate: false,
+                    drawBehind: true,
+                    visible: false
                 }
             });
 
@@ -125,6 +192,7 @@ const Navigator = types
         };
 
         return {
+            afterAttach,
             dismissAllModals,
             dismissModal,
             dismissOverlay,
@@ -138,7 +206,9 @@ const Navigator = types
             showRootModal,
             showModal,
             showOverlay,
-            start
+            start,
+            undo,
+            redo
         };
     });
 

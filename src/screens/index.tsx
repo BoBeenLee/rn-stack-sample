@@ -7,6 +7,7 @@ import SwapiScreen from "./SwapiScreen";
 import ErrorScreen from "./ErrorScreen";
 import withStore from "../hoc/withStore";
 import { withOverlay } from "../../ReactotronConfig";
+import withNavigator from "../hoc/withNavigator";
 
 function registerScreens(store) {
   const withStoreAndOverlay = _.flow([
@@ -15,16 +16,16 @@ function registerScreens(store) {
   ]);
 
   Navigation.registerComponent("AppScreen", () =>
-    withStoreAndOverlay(AppScreen)
+    withNavigator(withStoreAndOverlay(AppScreen), "AppScreen")
   );
   Navigation.registerComponent("TodoScreen", () =>
-    withStoreAndOverlay(TodoScreen)
+    withNavigator(withStoreAndOverlay(TodoScreen), "TodoScreen")
   );
   Navigation.registerComponent("SwapiScreen", () =>
-    withStoreAndOverlay(SwapiScreen)
+    withNavigator(withStoreAndOverlay(SwapiScreen), "SwapiScreen")
   );
   Navigation.registerComponent("ErrorScreen", () =>
-    withStoreAndOverlay(ErrorScreen)
+    withNavigator(withStoreAndOverlay(ErrorScreen), "ErrorScreen")
   );
 }
 

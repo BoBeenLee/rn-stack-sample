@@ -18,6 +18,10 @@ export const setup = (store: IRootStore) => {
         store.todoStore.addTodo(`${_.uniqueId("helloworld")}`);
       } else if (type === "custom" && payload === "todoReset") {
         store.todoStore.reset();
+      } else if (type === "custom" && payload === "undo") {
+        store.navigator && store.navigator.undo();
+      } else if (type === "custom" && payload === "redo") {
+        store.navigator && store.navigator.redo();
       }
     }
   }));

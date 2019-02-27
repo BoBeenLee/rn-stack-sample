@@ -9,13 +9,15 @@ import {
 } from "react-native";
 import styled from "styled-components/native";
 
-import { Title, TodoCard, Button } from "../components";
+import { Title, TodoCard, Button, TopBar } from "../components";
 import { IStores } from "../stores/RootStore";
 import { ITodo } from "../stores/Todo";
 import { ITodoStore, getTodoStore } from "../stores/TodoStore";
 import withForm from "../hoc/withForm";
+import { INavigator } from "../stores/Navigator";
 
 interface IInject {
+  navigator: INavigator;
   todoStore: ITodoStore;
 }
 
@@ -68,6 +70,7 @@ const DEFAULT_TODO_VALUES = {
 
 @inject(
   (stores: IStores): IInject => ({
+    navigator: stores.store.navigator,
     todoStore: getTodoStore(stores)
   })
 )
@@ -87,6 +90,7 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
     const { todoText } = this.props.values;
     return (
       <Container>
+        <TopBar onBackPress={this.back} />
         <Header>
           <HeaderTitle>Todo</HeaderTitle>
           <HeaderHistory>
@@ -144,6 +148,11 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
     const { submitForm } = this.props;
     submitForm();
   };
+
+  private back = () => {
+    const { componentId, navigator } = this.props;
+    navigator.pop(componentId);
+  }
 }
 
 export default TodoScreen;

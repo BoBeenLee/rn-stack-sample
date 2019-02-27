@@ -4,11 +4,13 @@ import { FlatList, FlatListProps, ListRenderItemInfo } from "react-native";
 import moment from "moment";
 import styled from "styled-components/native";
 
-import { FilmCard, Title } from "../components";
+import { FilmCard, Title, TopBar } from "../components";
 import { IFilmItem, ISwapiStore, getSwapiStore } from "../stores/SwapiStore";
 import withLoading, { ILoadingProps } from "../hoc/withLoading";
+import { INavigator } from "../stores/Navigator";
 
 interface IInject {
+  navigator: INavigator;
   swapiStore: ISwapiStore;
 }
 
@@ -34,6 +36,7 @@ const FilmList = styled<FlatListProps<IFilmItem>>(FlatList).attrs({})``;
 
 @inject(
   (stores: any): IInject => ({
+    navigator: stores.store.navigator,
     swapiStore: getSwapiStore(stores)
   })
 )
@@ -58,6 +61,7 @@ class SwapiScreen extends Component<IProps, IStates> {
     const { films, refresh } = this.state;
     return (
       <Container>
+        <TopBar onBackPress={this.back} />
         <FilmList
           ListHeaderComponent={<FilmTitle>Swapi Film</FilmTitle>}
           data={films}
@@ -101,6 +105,11 @@ class SwapiScreen extends Component<IProps, IStates> {
       />
     );
   };
+
+  private back = () => {
+    const { componentId, navigator } = this.props;
+    navigator.pop(componentId);
+  }
 }
 
 export default SwapiScreen;

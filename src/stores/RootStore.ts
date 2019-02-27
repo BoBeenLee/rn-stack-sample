@@ -23,4 +23,13 @@ export interface IStores {
   store: IRootStore;
 }
 
+let store: IRootStore | null = null;
+const getRootStore = (): IRootStore => {
+  if (store === null) {
+    store = RootStore.create();
+  }
+  return store;
+};
+
 export default RootStore;
+export { getRootStore };
