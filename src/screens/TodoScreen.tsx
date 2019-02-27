@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import styled from "styled-components/native";
 
-import { Title, TodoCard } from "../components";
+import { Title, TodoCard, Button } from "../components";
 import { IStores } from "../stores/RootStore";
 import { ITodo } from "../stores/Todo";
 import { ITodoStore, getTodoStore } from "../stores/TodoStore";
@@ -30,6 +30,29 @@ interface IFormStates {
 const Container = styled.View`
   flex: 1;
   background-color: #fff;
+`;
+
+const Header = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const HeaderTitle = styled(Title)`
+  flex: 1;
+`;
+
+const HeaderHistory = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Undo = styled(Button)`
+  margin-right: 8px;
+`;
+
+const Redo = styled(Button)`
+  margin-right: 15px;
 `;
 
 const TodoList = styled<FlatListProps<ITodo>>(FlatList).attrs({
@@ -64,7 +87,13 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
     const { todoText } = this.props.values;
     return (
       <Container>
-        <Title>Todo</Title>
+        <Header>
+          <HeaderTitle>Todo</HeaderTitle>
+          <HeaderHistory>
+            <Undo type="default" onPress={this.onUndo}>Undo</Undo>
+            <Redo type="default" onPress={this.onRedo}>Redo</Redo>
+          </HeaderHistory>
+        </Header>
         <InputItem
           value={todoText}
           onChange={this.onTodoTextChange}
@@ -85,6 +114,14 @@ class TodoScreen extends Component<IProps & FormikProps<IFormStates>> {
 
       </Container>
     );
+  }
+
+  private onUndo = () => {
+    this.props.todoStore.undo();
+  }
+
+  private onRedo = () => {
+    this.props.todoStore.redo();
   }
 
   private onTodoTextChange = (text: string) => {

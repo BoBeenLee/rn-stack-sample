@@ -1,11 +1,13 @@
-import { flow, getRoot, Instance, types } from "mobx-state-tree";
+import { types } from "mobx-state-tree";
 
 import TodoStore from "./TodoStore";
 import SwapiStore from "./SwapiStore";
+import Navigator from "./Navigator";
 
 const RootStore = types.model("RootStore", {
   todoStore: types.optional(TodoStore, {}),
-  swapiStore: types.optional(SwapiStore, {})
+  swapiStore: types.optional(SwapiStore, {}),
+  navigator: types.optional(Navigator, {})
 }).actions(self => {
   const sendError = () => {
     throw new Error("Hello World");

@@ -24,6 +24,7 @@
     "mobx": "^4.3.1",
     "mobx-react": "^5.4.2",
     "mobx-state-tree": "^3.8.1",
+    "mst-middlewares": "^3.8.1",
     "moment": "^2.22.2",
     "react": "16.6.3",
     "react-native": "0.57.5",

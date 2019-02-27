@@ -1,13 +1,15 @@
 import _ from "lodash";
 import { flow, getRoot, Instance, types } from "mobx-state-tree";
-import Todo, { ITodo } from "./Todo";
-import { delay } from "../utils/common";
+import { TimeTraveller } from "mst-middlewares";
+
+import Todo from "./Todo";
 
 const PREFIX_TODO_ID = "todo";
 
 const TodoStore = types
   .model("TodoStore", {
-    todos: types.optional(types.array(Todo), [])
+    todos: types.optional(types.array(Todo), []),
+    history: types.optional(TimeTraveller, { targetPath: "../todos" })
   })
   .views(self => {
     return {
@@ -31,14 +33,24 @@ const TodoStore = types
       );
     };
 
+    const undo = () => {
+      if (self.history.canUndo) { self.history.undo(); }
+    }
+
+    const redo = () => {
+      if (self.history.canRedo) { self.history.redo(); }
+    }
+
     const afterAttach = () => {
-      addTodo("Hell");
-      addTodo("lo");
+      self.history.canRedo;
+      self.history.canUndo;
     };
 
     return {
       afterAttach,
       addTodo,
+      redo,
+      undo,
       reset
     };
   });

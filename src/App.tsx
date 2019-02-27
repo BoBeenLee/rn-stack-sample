@@ -13,29 +13,7 @@ registerScreens(rootStore);
 
 function start() {
   Navigation.events().registerAppLaunchedListener(() => {
-    Navigation.setDefaultOptions({
-      layout: {
-        orientation: ["portrait"]
-      },
-      statusBar: {
-        backgroundColor: "white",
-        style: "dark"
-      }
-    });
-
-    Navigation.setRoot({
-      root: {
-        stack: {
-          children: [
-            {
-              component: {
-                name: "AppScreen"
-              }
-            }
-          ]
-        }
-      }
-    });
+    rootStore.navigator.start();
   });
 }
 
